@@ -151,17 +151,17 @@ class AtaqueArea:
         if inimigo.direcao == 0:
             tela.blit(inimigo.sprite_atual, (z,w))
 
-class Invoca:
 
+
+class Invoca:
 
     def ataque_especial(self, tela, jogador, inimigo):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
 
-
-        pos_minion = [jogador.posicao[0] + 80, jogador.posicao[1] + 41]
-
         minion1.rodar(tela,jogador, inimigo)
+        minion2.rodar(tela,jogador, inimigo)
+        minion3.rodar(tela,jogador, inimigo)
         
 
     
