@@ -55,7 +55,7 @@ class Minions:
 
         if d > 40:
             pg.draw.circle(tela,
-                    (0,0,0),
+                    (255,255,0),
                     (self.posicao[0], self.posicao[1]),
                     10)
 

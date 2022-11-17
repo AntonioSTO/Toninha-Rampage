@@ -9,7 +9,8 @@ from minions import *
 
 class AtaqueFisico:
     def __init__(self):
-        self.cronometro = Cronometro()
+        self.timer = Cronometro()
+        self.encerra = 0
         
     def ataque_normal(self, tela, jogador, inimigo):
         pos1 = (jogador.posicao[0] + 41, jogador.posicao[1] + 41)
@@ -48,7 +49,8 @@ class AtaqueFisico:
 
 class Cura:
     def __init__(self):
-        self.cronometro = Cronometro()
+        self.timer = Cronometro()
+        self.encerra = 0
         
     def ataque_especial(self, tela, jogador, inimigo):
         
@@ -70,6 +72,10 @@ class Cura:
 
 class Stun:
     
+    def __init__(self):
+        self.timer = Cronometro()
+        self.encerra = 0
+
     def ataque_especial(self, tela, jogador, inimigo):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
@@ -111,6 +117,10 @@ class Stun:
         
 
 class AtaqueArea:
+
+    def __init__(self):
+        self.timer = Cronometro()
+        self.encerra = 0
 
     def ataque_especial(self, tela, jogador, inimigo):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
@@ -155,6 +165,10 @@ class AtaqueArea:
 
 class Invoca:
 
+    def __init__(self):
+        self.timer = Cronometro()
+        self.encerra = 0
+
     def ataque_especial(self, tela, jogador, inimigo):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
@@ -162,7 +176,124 @@ class Invoca:
         minion1.rodar(tela,jogador, inimigo)
         minion2.rodar(tela,jogador, inimigo)
         minion3.rodar(tela,jogador, inimigo)
+
+
+'''class Projectile:
+    def __init__(self, p0_x, p0_y):
+        self.px = p0_x
+        self.py = p0_y
+        self.v_x = 1
+        self.raio = 10
+        self.color = (0,0,0)
+
+    def draw(self, screen):
+        pg.draw.circle(screen, self.color, (self.px, self.py), self.raio)
+
+    def update(self):
+        self.px += self.v_x
+        if self.px < 0:
+            self.px = 0
+
+        limit_x = (ConfigJogo.LARGURA_TELA_PRINCIPAL - self.r)
+        if self.px > limit_x:
+            self.px = limit_x
+
+    def perform_shot(jogador, projectiles):
+        (x, y) = jogador.posicao
+        direcao = jogador.direcao
+        new_projectile = Projectile(
+            x, y, (0,0,0), 10)
+        projectiles.append(new_projectile)
+
+    def rodar(self, tela, jogador, projectiles):
+        self.perform_shot(jogador, projectiles)
+        self.draw(tela)
+        self.update()'''
+
+class Projectile:
+
+    def __init__(self, velocidade: float,
+    posicao: Tuple[float, float]):
+        self.velocidade = velocidade
+        self.posicao = posicao
+        self.posicao_inicial = posicao
+    
+    def movimento(self, jogador):
+        x, y = self.posicao
+    
+        vx = self.velocidade
+
+        novo_x = x
+        novo_x += vx
+
+
         
+        self.posicao = (novo_x, y)
+
+    
+    def desenha(self, tela, jogador, inimigo):
+        x, y = self.posicao
+        x_inimigo = inimigo.posicao[0] + 41
+        y_inimigo = inimigo.posicao[1] + 41
+
+        vx = (x-x_inimigo)
+        vy = (y-y_inimigo)
+
+        d = ((vx**2)+(vy**2))**(1/2)
+
+        if (d > 40) and ((x-10 > 0) \
+                    and ((x + 20) < ConfigJogo.LARGURA_TELA_PRINCIPAL)):
+
+            pg.draw.circle(tela,
+                    (0,0,0),
+                    (self.posicao[0], self.posicao[1]),
+                    10)
+
+        elif (d <= 40):
+            inimigo.vida -= jogador.dano
+            self.posicao = self.posicao_inicial
+        
+    def rodar(self,tela,jogador,inimigo):
+        self.movimento(jogador)
+        self.desenha(tela, jogador, inimigo)
+
+
+        
+class AtaqueDistancia:
+
+    projeteis = []
+
+    def __init__(self):
+        self.timer = Cronometro()
+        self.encerra = 0
+
+    def ataque_normal(self, tela, jogador, inimigo):
+        x = jogador.posicao[0] + 41
+        y = jogador.posicao[1] + 41
+        direcao = jogador.direcao
+        if direcao == 0:
+            new_projectile = Projectile(
+                10, (x,y))
+
+        elif direcao == 1:
+            new_projectile = Projectile(
+                -10, (x,y))
+
+        AtaqueDistancia.projeteis.append(new_projectile)
+
+        for p in AtaqueDistancia.projeteis:
+            p.rodar(tela, jogador, inimigo)
+    
+    def reseta(self):
+        AtaqueDistancia.projeteis = []
+        '''for p in AtaqueDistancia.projeteis:
+            p.posicao = p.posicao'''
+
+    def tempo(self):
+        if self.timer.tempo_passado() > 0.3:
+            self.encerra = 1
+            self.timer.reset()
+
 
     
         

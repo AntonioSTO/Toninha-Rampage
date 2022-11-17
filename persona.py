@@ -77,15 +77,16 @@ cura = Cura()
 stun = Stun()
 area = AtaqueArea()
 evoque = Invoca()
+dist = AtaqueDistancia()
 
 #################################################################
 
-toninha_maga = Personagem_batalha("Toninha Maga", 500, 1, 1, (0, 0),0, sprite_maga_d, sprite_maga_e, sprite_maga_ataque, sprite_maga_ataque, None, area)
+toninha_maga = Personagem_batalha("Toninha Maga", 500, 1, 1, (0, 0),0, sprite_maga_d, sprite_maga_e, sprite_maga_ataque, sprite_maga_ataque, dist, area)
 toninha_golem = Personagem_batalha("Toninha Golen", 1200, 2, 0.5, (0, 0),0, sprite_golem_d, sprite_golem_e, sprite_golem_ataque,None, fisico, stun)
 toninha_rei = Personagem_batalha("Toninha Rei", 800, 1, 1.5, (0, 0),0, sprite_rei_d, sprite_rei_e, sprite_rei_ataque,None, fisico, evoque)        #gerador de minions
 toninha_monge = Personagem_batalha("Toninha Monge", 600, 1, 2, (0, 0),0, sprite_monge_d, sprite_monge_e, sprite_monge_ataque, sprite_monge_cura, fisico, cura)
 
-soldado_atirador = Personagem_batalha("Soldado Atirador", 500, 1, 1, (0, 0),1, sprite_atirador_d, sprite_atirador_e, sprite_atirador_ataque, sprite_atirador_ataque, None, area)
+soldado_atirador = Personagem_batalha("Soldado Atirador", 500, 1, 1, (0, 0),1, sprite_atirador_d, sprite_atirador_e, sprite_atirador_ataque, sprite_atirador_ataque, dist, area)
 soldado_parrudo = Personagem_batalha("Soldado Parrudo", 1100, 2, 0.5, (0, 0),1, sprite_parrudo_d, sprite_parrudo_e, sprite_parrudo_ataque, None, fisico, stun)
 soldado_general = Personagem_batalha("General", 800, 1, 1.5, (0, 0),1, sprite_general_d, sprite_general_e, sprite_general_ataque, None, fisico,evoque)        #gerador de minions
 soldado_medico = Personagem_batalha("Soldado Medico", 600, 1, 2, (0, 0),1, sprite_medico_d, sprite_medico_e,sprite_medico_ataque, sprite_medico_cura, fisico, cura)

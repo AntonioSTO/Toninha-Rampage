@@ -1,5 +1,6 @@
 from typing import Tuple
 import pygame as pg
+from cronometro import Cronometro
 from config_jogo import ConfigJogo
 
 
@@ -32,6 +33,9 @@ class Personagem_batalha:
         self.ataque_distancia_bool = False
         self.classe1 = classe1
         self.classe2 = classe2
+
+        self.tempo1 = Cronometro()
+        self.tempo2 = Cronometro()
 
         if self.direcao == 0:
             self.sprite_inicial = self.sprite_direita

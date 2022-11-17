@@ -157,13 +157,18 @@ class CenaPrincipal:
         self.player2.desenha(self.tela)
         self.player1.desenha(self.tela)
                 
-        if pg.key.get_pressed()[pg.K_q]:
+        if pg.key.get_pressed()[pg.K_q] and self.player1.tempo1.tempo_passado() > 0.05:
             self.player1.classe1.ataque_normal(self.tela,self.player1,self.player2)
+            self.player1.classe1.tempo()
+
+            if self.player1.classe1.encerra == 1:
+                self.player1.tempo1.reset()
+                self.player1.classe1.encerra = 0
+                self.player1.classe1.reseta()
             
         if pg.key.get_pressed()[pg.K_u]:
             self.player2.classe1.ataque_normal(self.tela,self.player2,self.player1)
-
-           
+            
         if pg.key.get_pressed()[pg.K_e]:
             if self.player1.nome != 'Toninha Maga':
                 self.player1.classe2.ataque_especial(self.tela,self.player1, self.player2)
@@ -186,19 +191,23 @@ class CenaPrincipal:
                 self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1)
                 self.ataque_dist2 = 0
 
-        if not pg.key.get_pressed()[pg.K_q] and not pg.key.get_pressed()[pg.K_e]:
-            if self.player1.direcao == 0:
-                self.player1.sprite_atual = self.player1.sprite_direita
+        if not pg.key.get_pressed()[pg.K_q]:
 
-            elif self.player1.direcao == 1:
-                self.player1.sprite_atual = self.player1.sprite_esquerda
+            if not pg.key.get_pressed()[pg.K_e]:
+                if self.player1.direcao == 0:
+                    self.player1.sprite_atual = self.player1.sprite_direita
+
+                elif self.player1.direcao == 1:
+                    self.player1.sprite_atual = self.player1.sprite_esquerda
             
-        if not pg.key.get_pressed()[pg.K_u] and not pg.key.get_pressed()[pg.K_o]:
-            if self.player2.direcao == 0:
-                self.player2.sprite_atual = self.player2.sprite_direita
+        if not pg.key.get_pressed()[pg.K_u]:
 
-            elif self.player2.direcao == 1:
-                self.player2.sprite_atual = self.player2.sprite_esquerda
+            if not pg.key.get_pressed()[pg.K_o]:
+                if self.player2.direcao == 0:
+                    self.player2.sprite_atual = self.player2.sprite_direita
+
+                elif self.player2.direcao == 1:
+                    self.player2.sprite_atual = self.player2.sprite_esquerda
 
         pg.display.flip()
 
