@@ -265,24 +265,32 @@ class AtaqueDistancia:
 
     def __init__(self):
         self.timer = Cronometro()
+        self.intervalo = Cronometro()
         self.encerra = 0
 
     def ataque_normal(self, tela, jogador, inimigo):
         x = jogador.posicao[0] + 41
         y = jogador.posicao[1] + 41
         direcao = jogador.direcao
-        if direcao == 0:
-            new_projectile = Projectile(
-                10, (x,y))
+        
+        if self.intervalo.tempo_passado() > 0.3:
+            if direcao == 0:
+                new_projectile = Projectile(
+                    5, (x,y))
 
-        elif direcao == 1:
-            new_projectile = Projectile(
-                -10, (x,y))
+            elif direcao == 1:
+                new_projectile = Projectile(
+                    -5, (x,y))
 
-        AtaqueDistancia.projeteis.append(new_projectile)
-
+            if len(AtaqueDistancia.projeteis) < 1:
+                AtaqueDistancia.projeteis.append(new_projectile)
+            
         for p in AtaqueDistancia.projeteis:
+            #if self.intervalo.tempo_passado() > 0.1:
             p.rodar(tela, jogador, inimigo)
+            #    self.intervalo.reset()'''
+            
+        self.intervalo.reset()
     
     def reseta(self):
         AtaqueDistancia.projeteis = []
@@ -290,7 +298,7 @@ class AtaqueDistancia:
             p.posicao = p.posicao'''
 
     def tempo(self):
-        if self.timer.tempo_passado() > 0.3:
+        if self.timer.tempo_passado() > 2:
             self.encerra = 1
             self.timer.reset()
 

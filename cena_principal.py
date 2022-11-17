@@ -157,7 +157,7 @@ class CenaPrincipal:
         self.player2.desenha(self.tela)
         self.player1.desenha(self.tela)
                 
-        if pg.key.get_pressed()[pg.K_q] and self.player1.tempo1.tempo_passado() > 0.05:
+        if pg.key.get_pressed()[pg.K_q] and self.player1.tempo1.tempo_passado() > 0.4:
             self.player1.classe1.ataque_normal(self.tela,self.player1,self.player2)
             self.player1.classe1.tempo()
 
@@ -192,6 +192,9 @@ class CenaPrincipal:
                 self.ataque_dist2 = 0
 
         if not pg.key.get_pressed()[pg.K_q]:
+            self.player1.tempo1.reset()
+            self.player1.classe1.encerra = 0
+            self.player1.classe1.reseta()
 
             if not pg.key.get_pressed()[pg.K_e]:
                 if self.player1.direcao == 0:
