@@ -68,18 +68,18 @@ class Minions:
         self.desenha(tela, jogador, inimigo)
 
 
-n1 = random.randint(-80,80)
-n2 = random.randint(-80,80)
-n3 = random.randint(-80,80)
+n1 = random.randint(0,50)
+n2 = random.randint(0,95)
+n3 = random.randint(0,110)
 
-pos1 = [random.randint(0,100),random.randint(0,200)]
+pos1 = [random.randint(0,100),random.randint(0,600)]
 pos2 = [random.randint(0,70),random.randint(0,70)]
-pos3 = [random.randint(0,150),random.randint(0,150)]
+pos3 = [random.randint(0,150),random.randint(0,400)]
 
 
-pos_minion1 = [pos1[0] + n1, pos1[1] - n1]
-pos_minion2 = [pos2[0] + n2, pos2[1] - n2]
-pos_minion3 = [pos3[0] + n3, pos3[1] - n3]
+pos_minion1 = [pos1[0] + n1, pos1[1] + n1]
+pos_minion2 = [pos2[0] + n2, pos2[1] + n2]
+pos_minion3 = [pos3[0] + n3, pos3[1] + n3]
 
 minion1 = Minions(50, 0.1, 0.5, pos_minion1)
 minion2 = Minions(50, 0.1, 0.5, pos_minion2)
