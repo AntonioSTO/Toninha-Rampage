@@ -13,8 +13,8 @@ class Minions:
         self.dano = dano
         self.velocidade = velocidade
         self.posicao = posicao
-        self.posicao_inicial = posicao
-        self.existencia = True
+        self.posicao_inicial = self.posicao
+        self.colisao = False
     
     def movimento(self, inimigo):
         x, y = self.posicao
@@ -59,9 +59,10 @@ class Minions:
                     (self.posicao[0], self.posicao[1]),
                     10)
 
-        else:
-            inimigo.vida -= jogador.dano
+        elif d <= 40 and self.colisao == False:
+            inimigo.vida -= jogador.dano*6
             self.posicao = self.posicao_inicial
+            self.colisao = True
         
     def rodar(self,tela,jogador,inimigo):
         self.movimento(inimigo)
@@ -81,9 +82,9 @@ pos_minion1 = [pos1[0] + n1, pos1[1] + n1]
 pos_minion2 = [pos2[0] + n2, pos2[1] + n2]
 pos_minion3 = [pos3[0] + n3, pos3[1] + n3]
 
-minion1 = Minions(50, 0.1, 0.5, pos_minion1)
-minion2 = Minions(50, 0.1, 0.5, pos_minion2)
-minion3 = Minions(50, 0.1, 0.5, pos_minion3)
-minion4 = Minions(50, 0.1, 0.5, (0,0))
-minion5 = Minions(50, 0.1, 0.5, (0,0))
+minion1 = Minions(50, 0.1, 0.8, pos_minion1)
+minion2 = Minions(50, 0.1, 0.8, pos_minion2)
+minion3 = Minions(50, 0.1, 0.8, pos_minion3)
+minion4 = Minions(50, 0.1, 0.8, (0,0))
+minion5 = Minions(50, 0.1, 0.8, (0,0))
         

@@ -1,4 +1,7 @@
 import pygame as pg
+from pygame import font
+
+pg.font.init()
 
 class ConfigJogo:
     ALTURA_TELA = 400
@@ -23,6 +26,10 @@ class ConfigJogo:
     POS_X1 = (0.05 * LARGURA_TELA_PRINCIPAL)
     POS_X2 = (0.95 * LARGURA_TELA_PRINCIPAL - LARGURA_P)
     DURACAO_PARTIDA = 120
+
+    font_stun = pg.font.SysFont(None, FONTE_HISTORIA)
+    stunned = font_stun.render(
+            f'Stunned!', True, COR_TEXTO)
 
     ##########################################################
     ################# CONFIG DE AUDIOS #######################

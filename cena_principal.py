@@ -157,30 +157,43 @@ class CenaPrincipal:
         self.player2.desenha(self.tela)
         self.player1.desenha(self.tela)
                 
-        if pg.key.get_pressed()[pg.K_q] and self.player1.tempo1.tempo_passado() > 0.4:
+        if pg.key.get_pressed()[pg.K_q] and self.player1.tempo1.tempo_passado() > 0.01:
             self.player1.classe1.ataque_normal(self.tela,self.player1,self.player2)
             self.player1.classe1.tempo()
 
             if self.player1.classe1.encerra == 1:
                 self.player1.tempo1.reset()
                 self.player1.classe1.encerra = 0
-                self.player1.classe1.reseta()
+                self.player1.classe1.reseta(self.player1,self.player2)
             
-        if pg.key.get_pressed()[pg.K_u]:
+        if pg.key.get_pressed()[pg.K_u] and self.player2.tempo1.tempo_passado() > 0.01:
             self.player2.classe1.ataque_normal(self.tela,self.player2,self.player1)
+            self.player2.classe1.tempo()
+
+            if self.player2.classe1.encerra == 1:
+                self.player2.tempo1.reset()
+                self.player2.classe1.encerra = 0
+                self.player2.classe1.reseta(self.player2,self.player1)
             
-        if pg.key.get_pressed()[pg.K_e]:
-            if self.player1.nome != 'Toninha Maga':
-                self.player1.classe2.ataque_especial(self.tela,self.player1, self.player2)
-            else:
-                self.ataque_dist1 = 1
+        if pg.key.get_pressed()[pg.K_e] and self.player1.tempo2.tempo_passado() > 2:
+            self.player1.classe2.ataque_especial(self.tela,self.player1, self.player2)
+            self.player1.classe2.tempo()
+
+            if self.player1.classe2.encerra == 1:
+                self.player1.tempo2.reset()
+                self.player1.classe2.encerra = 0
+                self.player1.classe2.reseta(self.player1,self.player2)
 
         
-        if pg.key.get_pressed()[pg.K_o]:
-            if self.player2.nome != 'Soldado Atirador':
-                self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1)
-            else:
-                self.ataque_dist2 = 1
+        if pg.key.get_pressed()[pg.K_o] and self.player2.tempo2.tempo_passado() > 2:
+            self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1)
+            self.player2.classe2.tempo()
+
+            if self.player2.classe2.encerra == 1:
+                self.player2.tempo2.reset()
+                self.player2.classe2.encerra = 0
+                self.player2.classe2.reseta(self.player2,self.player1)
+
 
         if (pg.mouse.get_pressed()[0]):
             if self.ataque_dist1 == 1:
@@ -191,26 +204,25 @@ class CenaPrincipal:
                 self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1)
                 self.ataque_dist2 = 0
 
-        if not pg.key.get_pressed()[pg.K_q]:
+        '''if not pg.key.get_pressed()[pg.K_q]:
             self.player1.tempo1.reset()
             self.player1.classe1.encerra = 0
-            self.player1.classe1.reseta()
+            self.player1.classe1.reseta(self.player1,self.player2)
 
-            if not pg.key.get_pressed()[pg.K_e]:
-                if self.player1.direcao == 0:
-                    self.player1.sprite_atual = self.player1.sprite_direita
-
-                elif self.player1.direcao == 1:
-                    self.player1.sprite_atual = self.player1.sprite_esquerda
+        if not pg.key.get_pressed()[pg.K_e]:
+            self.player1.tempo2.reset()
+            self.player1.classe2.encerra = 0
+            self.player1.classe2.reseta(self.player1,self.player2)        
             
         if not pg.key.get_pressed()[pg.K_u]:
+            self.player2.tempo1.reset()
+            self.player2.classe1.encerra = 0
+            self.player2.classe1.reseta(self.player2,self.player1)
 
-            if not pg.key.get_pressed()[pg.K_o]:
-                if self.player2.direcao == 0:
-                    self.player2.sprite_atual = self.player2.sprite_direita
-
-                elif self.player2.direcao == 1:
-                    self.player2.sprite_atual = self.player2.sprite_esquerda
+        if not pg.key.get_pressed()[pg.K_o]:
+            self.player2.tempo2.reset()
+            self.player2.classe2.encerra = 0
+            self.player2.classe2.reseta(self.player2,self.player1)'''
 
         pg.display.flip()
 

@@ -29,6 +29,7 @@ class Personagem_batalha:
         '''self.sprite_dano = sprite_dano'''
         self.posicao_centro = (posicao[0] + 41, posicao[1] + 41)
         self.direcao = direcao
+        self.direcao_inicial = direcao
         self.ataque_fisico_bool = False
         self.ataque_distancia_bool = False
         self.classe1 = classe1
@@ -36,6 +37,7 @@ class Personagem_batalha:
 
         self.tempo1 = Cronometro()
         self.tempo2 = Cronometro()
+        self.stun = Cronometro()
 
         if self.direcao == 0:
             self.sprite_inicial = self.sprite_direita
@@ -46,20 +48,24 @@ class Personagem_batalha:
         self.sprite_atual = self.sprite_inicial
 
     def mover_para_cima(self):
-        self.velocidade_y = -self.velocidade
+        if self.stun.tempo_passado() > 2:
+            self.velocidade_y = -self.velocidade
 
     def mover_para_baixo(self):
-        self.velocidade_y = self.velocidade
+        if self.stun.tempo_passado() > 2:
+            self.velocidade_y = self.velocidade
 
     def mover_para_direita(self):
-        self.velocidade_x = self.velocidade
-        self.sprite_atual = self.sprite_direita
-        self.direcao = 0
+        if self.stun.tempo_passado() > 2:
+            self.velocidade_x = self.velocidade
+            self.sprite_atual = self.sprite_direita
+            self.direcao = 0
 
     def mover_para_esquerda(self):
-        self.velocidade_x = -self.velocidade
-        self.sprite_atual = self.sprite_esquerda
-        self.direcao = 1
+        if self.stun.tempo_passado() > 2:
+            self.velocidade_x = -self.velocidade
+            self.sprite_atual = self.sprite_esquerda
+            self.direcao = 1
 
     def parar_x(self):
         self.velocidade_x = 0
@@ -87,6 +93,9 @@ class Personagem_batalha:
         y = self.posicao[1]
 
         tela.blit(self.sprite_atual, (x,y))
+
+        if self.stun.tempo_passado() < 2:
+            tela.blit(ConfigJogo.stunned, (self.posicao[0], self.posicao[1] - 30))
 
 
         '''if self.direcao == 0:
