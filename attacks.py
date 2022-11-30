@@ -54,7 +54,7 @@ class AtaqueFisico:
             jogador.sprite_atual = jogador.sprite_esquerda
 
     def tempo(self):
-        if self.timer.tempo_passado() > 0.15:
+        if self.timer.tempo_passado() > 0.3:
             self.encerra = 1
             self.timer.reset()
 
@@ -64,7 +64,7 @@ class Cura:
         self.encerra = 0
         self.vida = 0
         
-    def ataque_especial(self, tela, jogador, inimigo):
+    def ataque_especial(self, tela, jogador, inimigo, mouse):
         
         x = jogador.posicao[0]
         y = jogador.posicao[1]
@@ -100,7 +100,7 @@ class Stun:
         self.intervalo = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo):
+    def ataque_especial(self, tela, jogador, inimigo, mouse):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
         d = (((pos1[0]-pos2[0])**2)+((pos1[1]-pos2[1])**2))**(1/2)
@@ -195,32 +195,29 @@ class AtaqueArea:
         self.timer = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo):
+    def ataque_especial(self, tela, jogador, inimigo, mouse):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
 
-        contador = Cronometro()
+        position = mouse
         
-        x = jogador.posicao[0]
-        y = jogador.posicao[1]
         z = inimigo.posicao[0]
         w = inimigo.posicao[1]
 
-        pg.event.get()  
-        mouse_position = pg.mouse.get_pos()
-        x_mouse = mouse_position[0]
-        y_mouse= mouse_position[1]
+        x_mouse = position[0]
+        y_mouse= position[1]
+        
 
+        if (pos2[0] >= x_mouse - 75) and (pos2[0] <= x_mouse + 75):
+            if (pos2[1] >= y_mouse - 75) and (pos2[1] <= y_mouse + 75):
+                inimigo.vida -= 0.1*jogador.dano
 
-        if (pos2[0] >= x_mouse - 100) and (pos2[0] <= x_mouse + 100):
-            if (pos2[1] >= y_mouse - 100) and (pos2[1] <= y_mouse + 100):
-                inimigo.vida -= jogador.dano
-
+        
         
         pg.draw.circle(tela,
         (255, 100, 80), 
         (x_mouse, y_mouse),
-        100)
+        75)
 
         if jogador.direcao == 0:
             jogador.sprite_atual = jogador.sprite_ataque
@@ -251,7 +248,7 @@ class Invoca:
         self.timer = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo):
+    def ataque_especial(self, tela, jogador, inimigo, mouse):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
 
@@ -370,6 +367,9 @@ class AtaqueDistancia:
         direcao = jogador.direcao
 
         if jogador.direcao_inicial == 0:
+            
+            jogador.sprite_atual = jogador.sprite_ataque
+
 
             if direcao == 0:
                 new_projectile = Projectile(
@@ -380,6 +380,8 @@ class AtaqueDistancia:
                     -5, (x,y), (255,0,0))
 
         if jogador.direcao_inicial == 1:
+            
+            jogador.sprite_atual = pg.transform.flip(jogador.sprite_ataque, True, False)
 
             if direcao == 0:
                 new_projectile = Projectile(
@@ -404,15 +406,32 @@ class AtaqueDistancia:
             p.posicao = p.posicao'''
 
     def tempo(self):
-        if self.timer.tempo_passado() > 0.5:
+        if self.timer.tempo_passado() > 0.6:
             self.encerra = 1
             self.timer.reset()
 
 
     
-        
-        
-        
-        
+class Teleport:
+
+    def __init__(self):
+        self.timer = Cronometro()
+        self.encerra = 0
+
+    def ataque_especial(self, tela, jogador, inimigo, mouse):
+
+        position = mouse
+
+        if (position[0] > 41 and position[0] < ConfigJogo.LARGURA_TELA_PRINCIPAL - 41) and (position[1] > 41 and position[1] < ConfigJogo.ALTURA_TELA_PRINCIPAL - 41):
+
+            jogador.posicao = (position[0] - 41, position[1] - 41)
+
+    def reseta(self,jogador,inimigo):
+        pass
+    
+    def tempo(self):
+        if self.timer.tempo_passado() > 2.1:
+            self.encerra = 1
+            self.timer.reset()
         
         

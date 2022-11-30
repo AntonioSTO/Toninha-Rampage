@@ -16,6 +16,7 @@ class CenaPrincipal:
         self.cd = Cronometro()
         '''self.estado = EstadoJogo()'''
         self.font = pg.font.SysFont(None, 48)
+        self.vitorioso = 0
         
         py = ConfigJogo.ALTURA_TELA // 2 - ConfigJogo.ALTURA_P // 2
         px_esq = ConfigJogo.POS_X1
@@ -176,7 +177,8 @@ class CenaPrincipal:
                 self.player2.classe1.reseta(self.player2,self.player1)
             
         if pg.key.get_pressed()[pg.K_e] and self.player1.tempo2.tempo_passado() > 2:
-            self.player1.classe2.ataque_especial(self.tela,self.player1, self.player2)
+            mouse_position = pg.mouse.get_pos()
+            self.player1.classe2.ataque_especial(self.tela,self.player1, self.player2, mouse_position)
             self.player1.classe2.tempo()
 
             if self.player1.classe2.encerra == 1:
@@ -186,7 +188,8 @@ class CenaPrincipal:
 
         
         if pg.key.get_pressed()[pg.K_o] and self.player2.tempo2.tempo_passado() > 2:
-            self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1)
+            mouse_position = pg.mouse.get_pos()
+            self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1, mouse_position)
             self.player2.classe2.tempo()
 
             if self.player2.classe2.encerra == 1:
@@ -195,14 +198,7 @@ class CenaPrincipal:
                 self.player2.classe2.reseta(self.player2,self.player1)
 
 
-        if (pg.mouse.get_pressed()[0]):
-            if self.ataque_dist1 == 1:
-                self.player1.classe2.ataque_especial(self.tela,self.player1, self.player2)
-                self.ataque_dist1 = 0
-                
-            elif self.ataque_dist2 == 1:
-                self.player2.classe2.ataque_especial(self.tela,self.player2, self.player1)
-                self.ataque_dist2 = 0
+    
 
         '''if not pg.key.get_pressed()[pg.K_q]:
             self.player1.tempo1.reset()
@@ -231,8 +227,20 @@ class CenaPrincipal:
             (self.player2.vida <= 0) or \
                 (self.cronometro.tempo_passado() > float(ConfigJogo.DURACAO_PARTIDA)):
             self.encerra = True
-            return self.encerra
+            ConfigJogo.TELA += 1
+            if self.player1.vida > self.player2.vida:
+                ConfigJogo.VITORIOSO = 1
+                ConfigJogo.SPRITE_VITORIOSO1 = self.player1.sprite_direita
 
+            elif self.player2.vida > self.player1.vida:
+                ConfigJogo.VITORIOSO = 2
+                ConfigJogo.SPRITE_VITORIOSO2 = self.player2.sprite_direita
+
+            else:
+                ConfigJogo.VITORIOSO = 3
+                ConfigJogo.SPRITE_VITORIOSO1 = self.player1.sprite_direita
+                ConfigJogo.SPRITE_VITORIOSO2 = self.player2.sprite_direita
+                
     def rodar(self):
         while not self.encerra:
             self.desenha()

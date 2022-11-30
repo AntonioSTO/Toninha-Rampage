@@ -60,7 +60,7 @@ class Minions:
                     10)
 
         elif d <= 40 and self.colisao == False:
-            inimigo.vida -= jogador.dano*6
+            inimigo.vida -= jogador.dano*12
             self.posicao = self.posicao_inicial
             self.colisao = True
         

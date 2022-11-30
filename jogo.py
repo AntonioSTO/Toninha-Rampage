@@ -5,6 +5,7 @@ from cena_principal import CenaPrincipal
 from cena_selecao1 import CenaSelection1
 from cena_selecao2 import CenaSelection2
 from config_jogo import ConfigJogo
+from tela_final import CenaFinal
 from personagem_bat import Personagem_batalha
 from persona import *
 
@@ -70,4 +71,12 @@ class Jogo_Toninha:
                 ConfigJogo.ALTURA_TELA_PRINCIPAL))
 
                 cena = CenaPrincipal(self.tela_PRINCIPAL, id1, id2)
+                cena.rodar()
+            
+            if ConfigJogo.TELA == 6:
+                self.tela_PRINCIPAL = pg.display.set_mode((
+                ConfigJogo.LARGURA_TELA_PRINCIPAL,
+                ConfigJogo.ALTURA_TELA_PRINCIPAL))
+
+                cena = CenaFinal(self.tela_PRINCIPAL)
                 cena.rodar()

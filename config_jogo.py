@@ -26,6 +26,9 @@ class ConfigJogo:
     POS_X1 = (0.05 * LARGURA_TELA_PRINCIPAL)
     POS_X2 = (0.95 * LARGURA_TELA_PRINCIPAL - LARGURA_P)
     DURACAO_PARTIDA = 120
+    VITORIOSO = 0
+    SPRITE_VITORIOSO1 = None
+    SPRITE_VITORIOSO1 = None
 
     font_stun = pg.font.SysFont(None, FONTE_HISTORIA)
     stunned = font_stun.render(

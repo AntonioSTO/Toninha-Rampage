@@ -38,6 +38,7 @@ class Personagem_batalha:
         self.tempo1 = Cronometro()
         self.tempo2 = Cronometro()
         self.stun = Cronometro()
+        self.tempo_area = Cronometro()
 
         if self.direcao == 0:
             self.sprite_inicial = self.sprite_direita
@@ -96,7 +97,19 @@ class Personagem_batalha:
 
         if self.stun.tempo_passado() < 2:
             tela.blit(ConfigJogo.stunned, (self.posicao[0], self.posicao[1] - 30))
+        
+        if self.tempo_area.tempo_passado() < 2:
+            pass
 
+
+    #def desenha_area(self, tela, mouse):
+     #   x = mouse[0]
+      #  y = mouse[1]
+#
+ #       pg.draw.circle(tela,
+  #      (255, 100, 80), 
+   #     (x, y),
+    #    100)
 
         '''if self.direcao == 0:
             if self.ataque_fisico_bool:
