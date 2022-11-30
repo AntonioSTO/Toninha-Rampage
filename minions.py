@@ -1,6 +1,6 @@
 import pygame as pg
 from typing import Tuple
-from config_jogo import ConfigJogo
+from config_jogo import *
 import random
 
 class Minions:
@@ -54,10 +54,7 @@ class Minions:
         d = ((vx**2)+(vy**2))**(1/2)
 
         if d > 40:
-            pg.draw.circle(tela,
-                    (255,255,0),
-                    (self.posicao[0], self.posicao[1]),
-                    10)
+            tela.blit(minion, (self.posicao[0], self.posicao[1]))
 
         elif d <= 40 and self.colisao == False:
             inimigo.vida -= jogador.dano*12

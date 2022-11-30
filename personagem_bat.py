@@ -10,7 +10,7 @@ class Personagem_batalha:
 
     def __init__(self, nome: str, vida: float, dano: float,
     velocidade: float, posicao: Tuple[float, float], direcao: int, sprite_direita: any, sprite_esquerda: any, sprite_ataque: any,
-    sprite_especial: any, sprite_dano: any, classe1, classe2):
+    sprite_especial: any, sprite_dano: any, sprite_agua: any, classe1, classe2):
         self.nome = nome
         self.vida = vida
         self.dano = dano
@@ -27,6 +27,7 @@ class Personagem_batalha:
         self.sprite_ataque = sprite_ataque
         self.sprite_especial = sprite_especial
         self.sprite_dano = sprite_dano
+        self.sprite_agua = sprite_agua
         self.posicao_centro = (posicao[0] + 41, posicao[1] + 41)
         self.direcao = direcao
         self.direcao_inicial = direcao
@@ -75,6 +76,7 @@ class Personagem_batalha:
 
     def atualizar_posicao(self):
         x, y = self.posicao
+        self.slow()
         novo_x = x + self.velocidade_x
         novo_y = y + self.velocidade_y
 
@@ -82,6 +84,33 @@ class Personagem_batalha:
                 ((novo_y + 82) <= ConfigJogo.ALTURA_TELA_PRINCIPAL)) and ((novo_x >= 0) \
                     and ((novo_x + 82) <= ConfigJogo.LARGURA_TELA_PRINCIPAL)): 
             self.posicao = (novo_x, novo_y)
+
+    def slow(self):
+        x, y = self.posicao
+
+        if y < ConfigJogo.ALTURA_TELA_PRINCIPAL//2:
+            if x > 384 and x < 544:
+                self.velocidade= 0.5*self.velocidade_nominal
+                if self.direcao == 0:
+                    self.sprite_atual = self.sprite_agua
+        
+                if self.direcao == 1:
+                    self.sprite_atual = pg.transform.flip(self.sprite_agua, True, False)
+            
+            else:
+                self.velocidade = self.velocidade_nominal
+
+        elif y >= ConfigJogo.ALTURA_TELA_PRINCIPAL//2:
+            if x > 416 and x < 576:
+                self.velocidade= 0.5*self.velocidade_nominal
+                if self.direcao == 0:
+                    self.sprite_atual = self.sprite_agua
+        
+                if self.direcao == 1:
+                    self.sprite_atual = pg.transform.flip(self.sprite_agua, True, False)
+
+            else:
+                self.velocidade = self.velocidade_nominal
 
     def rect(self) -> Tuple[float, float, float, float]:
         """ retorna os dados da P como os retangulos sao representados 

@@ -6,7 +6,7 @@ from persona import Lista2
 from personagem_bat import *
 from cronometro import Cronometro
 import math
-
+from tiles import *
 
 class CenaPrincipal:
     def __init__(self, tela, indice1, indice2):
@@ -146,6 +146,7 @@ class CenaPrincipal:
 
     def desenha(self):
         self.tela.fill((255, 255, 255))
+        mapa = Tilemap('1mapa.csv', self.tela)
 
         if self.gambiarra == 1:
             pg.draw.circle(self.tela,

@@ -6,8 +6,8 @@ pg.font.init()
 class ConfigJogo:
     ALTURA_TELA = 400
     LARGURA_TELA = 700
-    ALTURA_TELA_PRINCIPAL = 700
-    LARGURA_TELA_PRINCIPAL = 1050
+    ALTURA_TELA_PRINCIPAL = 640
+    LARGURA_TELA_PRINCIPAL = 1024
     COR_TITULO = (255, 0, 0)
     COR_TEXTO = (0, 0, 0)
     COR_CAIXA = (0, 0, 0)
@@ -44,6 +44,15 @@ class ConfigJogo:
 
     switch_sound = pg.mixer.Sound(r'./sound/menu_sound.wav')
     pg.mixer.Sound.set_volume(switch_sound, .1)
+
+def img(diretorio):
+    return pg.image.load(diretorio)
+
+def scale(imagem, resolucao):
+    return pg.transform.scale(imagem, resolucao)
+
+minion = scale(img(r'./sprites/minion.png'), (32, 32))
+    
 
 
 def load_image(name, colorkey=None, scale=1.0):

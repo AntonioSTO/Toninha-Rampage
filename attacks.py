@@ -402,29 +402,32 @@ class AtaqueDistancia:
         direcao = jogador.direcao
 
         if jogador.direcao_inicial == 0:
-            
-            jogador.sprite_atual = jogador.sprite_ataque
-
 
             if direcao == 0:
                 new_projectile = Projectile(
                     5, (x,y), (255,0,0))
+                
+                jogador.sprite_atual = jogador.sprite_ataque
 
             elif direcao == 1:
                 new_projectile = Projectile(
                     -5, (x,y), (255,0,0))
+            
+                jogador.sprite_atual = pg.transform.flip(jogador.sprite_ataque, True, False)
 
         if jogador.direcao_inicial == 1:
-            
-            jogador.sprite_atual = pg.transform.flip(jogador.sprite_ataque, True, False)
 
             if direcao == 0:
                 new_projectile = Projectile(
                     5, (x,y), (0,0,0))
+            
+                jogador.sprite_atual = jogador.sprite_ataque
 
             elif direcao == 1:
                 new_projectile = Projectile(
                     -5, (x,y), (0,0,0))
+            
+                jogador.sprite_atual = pg.transform.flip(jogador.sprite_ataque, True, False)
 
 
         if len(self.projeteis) <= 1:
