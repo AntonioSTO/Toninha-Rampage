@@ -61,6 +61,10 @@ class Minions:
 
         elif d <= 40 and self.colisao == False:
             inimigo.vida -= jogador.dano*12
+            if inimigo.direcao == 0:
+                inimigo.sprite_atual = inimigo.sprite_dano
+            if inimigo.direcao == 1:
+                inimigo.sprite_atual = pg.transform.flip(inimigo.sprite_dano, True, False)
             self.posicao = self.posicao_inicial
             self.colisao = True
         

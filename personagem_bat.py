@@ -10,7 +10,7 @@ class Personagem_batalha:
 
     def __init__(self, nome: str, vida: float, dano: float,
     velocidade: float, posicao: Tuple[float, float], direcao: int, sprite_direita: any, sprite_esquerda: any, sprite_ataque: any,
-    sprite_especial: any, classe1, classe2):
+    sprite_especial: any, sprite_dano: any, classe1, classe2):
         self.nome = nome
         self.vida = vida
         self.dano = dano
@@ -26,7 +26,7 @@ class Personagem_batalha:
         self.sprite_esquerda = sprite_esquerda
         self.sprite_ataque = sprite_ataque
         self.sprite_especial = sprite_especial
-        '''self.sprite_dano = sprite_dano'''
+        self.sprite_dano = sprite_dano
         self.posicao_centro = (posicao[0] + 41, posicao[1] + 41)
         self.direcao = direcao
         self.direcao_inicial = direcao
