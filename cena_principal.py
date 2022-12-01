@@ -231,10 +231,12 @@ class CenaPrincipal:
             ConfigJogo.TELA += 1
             if self.player1.vida > self.player2.vida:
                 ConfigJogo.VITORIOSO = 1
-                ConfigJogo.SPRITE_VITORIOSO1 = self.player1.sprite_direita
+                ConfigJogo.SPRITE_VITORIOSO1 = self.player1.sprite_ataque
+                ConfigJogo.SPRITE_VITORIOSO2 = self.player2.sprite_death
 
             elif self.player2.vida > self.player1.vida:
                 ConfigJogo.VITORIOSO = 2
+                ConfigJogo.SPRITE_VITORIOSO1 = self.player1.sprite_death
                 ConfigJogo.SPRITE_VITORIOSO2 = self.player2.sprite_direita
 
             else:

@@ -49,9 +49,11 @@ class CenaFinal:
         self.desenha_titulo(self.tela)
         self.desenha_texto(self.tela)
         if ConfigJogo.VITORIOSO == 1:
-            self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO1, (200,200)), (x,y))
+            self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO1, (200,200)), (x-100,y))
+            self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO2, (200,200)), (x+100,y))
         elif ConfigJogo.VITORIOSO == 2:
-            self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO2, (200,200)), (x,y))
+            self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO1, (200,200)), (x-100,y))
+            self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO2, (200,200)), (x+100,y))
         else:
             self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO1, (200,200)), (x-100,y))
             self.tela.blit(scale(ConfigJogo.SPRITE_VITORIOSO2, (200,200)), (x+100,y))
