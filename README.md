@@ -65,7 +65,7 @@ Após o termino da partida, surge a tela com o resultado final do jogo, indicand
 
 ## Abaixo, encontra-se um vídeo de demonstração do TONINHA-RAMPAGE
 
-Clique **[aqui]** para ter acesso ao vídeo!
+Clique **[aqui](https://youtu.be/FT3jzhTvY4Q)** para ter acesso ao vídeo!
 
 
 ## Esperamos que tenham uma excelente jogatina!
