@@ -36,19 +36,6 @@ class CenaHistoria:
                 ConfigJogo.TELA += 1
                 self.encerra = True
                 
-    def rodar(self):
-        while not self.encerra:
-            self.tratamento_eventos()
-            self.desenha()
-
-    def desenha(self):
-        self.tela.fill((255, 255, 255))
-        self.desenha_titulo(self.tela)
-        self.desenha_historia1(self.tela)
-        self.desenha_historia2(self.tela)
-        self.desenha_historia3(self.tela)
-        self.desenha_historia4(self.tela)
-        pg.display.flip()
 
     def desenha_titulo(self, tela):
         px = ConfigJogo.LARGURA_TELA // 2 - self.titulo.get_size()[0] // 2
@@ -84,6 +71,17 @@ class CenaHistoria:
         tela.blit(self.historia4, (px, py))
         
         
+    def desenha(self):
+        self.tela.fill((255, 255, 255))
+        self.desenha_titulo(self.tela)
+        self.desenha_historia1(self.tela)
+        self.desenha_historia2(self.tela)
+        self.desenha_historia3(self.tela)
+        self.desenha_historia4(self.tela)
+        pg.display.flip()
     
         
-        
+    def rodar(self):
+        while not self.encerra:
+            self.tratamento_eventos()
+            self.desenha()

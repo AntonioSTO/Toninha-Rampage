@@ -12,7 +12,6 @@ from persona import *
 class Jogo_Toninha:
     def __init__(self):
         pg.init()
-        '''pg.mixer.init()'''
 
         self.tela = pg.display.set_mode((
             ConfigJogo.LARGURA_TELA,

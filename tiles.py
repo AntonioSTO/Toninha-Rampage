@@ -1,10 +1,11 @@
 import pygame, csv, os
+from typing import Tuple
 
 #######################################################
 def img(diretorio):
     return pygame.image.load(diretorio)
 
-def scale(imagem, resolucao):
+def scale(imagem, resolucao: Tuple[int, int]):
     return pygame.transform.scale(imagem, resolucao)
 #######################################################
 
@@ -18,7 +19,7 @@ i_b28 = scale(img(r'./tileset/bloco28.png'), (32, 32))
 #################################################################
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, image, x, y):
+    def __init__(self, image, x: float, y: float):
         pygame.sprite.Sprite.__init__(self)
         self.image = image
         self.rect = self.image.get_rect()
@@ -28,7 +29,7 @@ class Tile(pygame.sprite.Sprite):
         surface.blit(self.image, (self.rect.x, self.rect.y))
 
 
-class Tilemap:
+class Tilemap:              #filename = arquivo.csv
     def __init__(self, filename, surface):
         self.tile_size = 32
         self.start_x, self.start_y = 0, 0

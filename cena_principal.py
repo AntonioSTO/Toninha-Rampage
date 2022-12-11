@@ -9,12 +9,11 @@ import math
 from tiles import *
 
 class CenaPrincipal:
-    def __init__(self, tela, indice1, indice2):
+    def __init__(self, tela, indice1: float, indice2: float):
         self.tela = tela
-        self.encerra = False
+        self.encerra: bool = False
         self.cronometro = Cronometro()
         self.cd = Cronometro()
-        '''self.estado = EstadoJogo()'''
         self.font = pg.font.SysFont(None, 48)
         self.vitorioso = 0
         
@@ -25,8 +24,8 @@ class CenaPrincipal:
         self.indice1 = indice1
         self.indice2 = indice2
         
-        self.player1 = Lista1[indice1]
-        self.player2 = Lista2[indice2]
+        self.player1: Personagem_batalha = Lista1[indice1]
+        self.player2: Personagem_batalha = Lista2[indice2]
         
         self.vida_total1 = self.player1.vida    #gambiarra provisória permanente
         self.vida_total2 = self.player2.vida
@@ -34,16 +33,15 @@ class CenaPrincipal:
         self.player1.posicao = (px_esq, py)     #self.player1 = Personagem_batalha(posicao=(px_esq, py))
         self.player2.posicao = (px_dir, py)     #self.player2 = Personagem_batalha(posicao=(px_dir, py))
 
-        self.x_mouse = 0
-        self.y_mouse = 0
-        self.gambiarra = 0
+        self.x_mouse: float = 0
+        self.y_mouse: float = 0
 
         self.ataque_dist1 = 0
         self.ataque_dist2 = 0
 
 
 
-    def tratamento_eventos(self):
+    def tratamento_eventos(self):   #volta de cenas, movimentação dos personagens
 
         for event in pg.event.get():
             if (event.type == pg.QUIT):
@@ -85,36 +83,14 @@ class CenaPrincipal:
             else:
                 self.player2.parar_y()
 
-            '''if pg.key.get_pressed()[pg.K_q]:
-                self.player1.classe.ataque_normal(self.tela,self.player1,self.player2)
-            
 
-            if pg.key.get_pressed()[pg.K_u]:
-                self.player2.classe.ataque_normal(self.tela,self.player2,self.player1)'''
-
-
-            '''if (event.type == pg.MOUSEBUTTONDOWN) or (pg.mouse.get_pressed()[0]):
-                mouse_position = pg.mouse.get_pos()
-                self.gambiarra = 1
-                self.x_mouse = mouse_position[0]
-                self.y_mouse= mouse_position[1]'''
-
-
-    def vencedor(self):
-        if self.player1.vida > self.player2.vida:
-            return "Toninhas"
-        elif self.player2.vida > self.player1.vida:
-            return "Soldados"
-        else:
-            return "Empate"
-    
     def reseta_vida1(self):
         return self.vida_total1
 
     def reseta_vida2(self):
         return self.vida_total2
 
-    def resetar(self):
+    def resetar(self):          #caso "ESC" for apertado
         self.player1.direcao = 0
         self.player2.direcao = 1
         self.cronometro.reset()
@@ -130,7 +106,7 @@ class CenaPrincipal:
         self.player1.atualizar_posicao()
         self.player2.atualizar_posicao()
 
-    def desenha_vidas(self, tela, vida1, vida2):
+    def desenha_vidas(self, tela, vida1: float, vida2: float):
         img = self.font.render(f'{math.ceil(vida1):.0f} x {math.ceil(vida2):.0f}',
                                 True, ConfigJogo.COR_ESTADO)
         px = ConfigJogo.LARGURA_TELA_PRINCIPAL // 2 - img.get_size()[0] // 2
@@ -164,6 +140,7 @@ class CenaPrincipal:
             pg.draw.rect(self.tela, ConfigJogo.B_BLOCK_COR3, ConfigJogo.B_BLOCK1)
         
         
+        # ATAQUES NORMAIS E ESPECIAIS
                 
         if pg.key.get_pressed()[pg.K_q] and self.player1.tempo1.tempo_passado() > 0.01:
             self.player1.classe1.ataque_normal(self.tela,self.player1,self.player2)

@@ -57,16 +57,41 @@ class CenaSelection2:
                     self.indice2 += 1        #para escolher o personagem na lista2
                     ConfigJogo.switch_sound.play()
 
-            
-    def retorna_indice2(self):  #função para retornar um valor para a variável id2 em jogo.py
-        return self.indice2
 
-    def rodar(self):
-        while not self.encerra:
-            self.tratamento_eventos()
-            self.desenha()
-            
-
+    def desenha_titulo(self,tela):
+        px = ConfigJogo.LARGURA_TELA // 2 - self.titulo.get_size()[0] // 2
+        py = (0.15 * ConfigJogo.ALTURA_TELA // 2)
+        tela.blit(self.titulo, (px, py))
+        
+    def desenha_selection1(self,tela):
+        px = ConfigJogo.LARGURA_TELA // 2 - \
+            self.selection1.get_size()[0] // 2
+        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
+            (self.titulo.get_size()[1] * 1.5)
+        tela.blit(self.selection1, (px, py))
+        
+    def desenha_selection2(self,tela):
+        px = ConfigJogo.LARGURA_TELA // 2 - \
+            self.selection1.get_size()[0] // 2
+        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
+            (self.titulo.get_size()[1] * 4.5)
+        tela.blit(self.selection2, (px, py))
+    
+    def desenha_selection3(self,tela):
+        px = ConfigJogo.LARGURA_TELA // 2 - \
+            self.selection1.get_size()[0] // 2
+        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
+            (self.titulo.get_size()[1] * 7.5)
+        tela.blit(self.selection3, (px, py))
+    
+    def desenha_selection4(self,tela):
+        px = ConfigJogo.LARGURA_TELA // 2 - \
+            self.selection1.get_size()[0] // 2
+        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
+            (self.titulo.get_size()[1] * 10.5)
+        tela.blit(self.selection4, (px, py))
+    
+    
     def desenha(self):
         x = (ConfigJogo.LARGURA_TELA//2) - 0.17*ConfigJogo.LARGURA_TELA
         y = (ConfigJogo.ALTURA_TELA//2) - 0.30*ConfigJogo.ALTURA_TELA
@@ -105,38 +130,13 @@ class CenaSelection2:
                 self.tela.blit(scale(Lista2[i].sprite_esquerda, (150,150)), (x_img,y_img))
         
         pg.display.flip()
-        
-        pg.display.flip()
 
-    def desenha_titulo(self,tela):
-        px = ConfigJogo.LARGURA_TELA // 2 - self.titulo.get_size()[0] // 2
-        py = (0.15 * ConfigJogo.ALTURA_TELA // 2)
-        tela.blit(self.titulo, (px, py))
-        
-    def desenha_selection1(self,tela):
-        px = ConfigJogo.LARGURA_TELA // 2 - \
-            self.selection1.get_size()[0] // 2
-        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
-            (self.titulo.get_size()[1] * 1.5)
-        tela.blit(self.selection1, (px, py))
-        
-    def desenha_selection2(self,tela):
-        px = ConfigJogo.LARGURA_TELA // 2 - \
-            self.selection1.get_size()[0] // 2
-        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
-            (self.titulo.get_size()[1] * 4.5)
-        tela.blit(self.selection2, (px, py))
+
+    def rodar(self):
+        while not self.encerra:
+            self.tratamento_eventos()
+            self.desenha()
     
-    def desenha_selection3(self,tela):
-        px = ConfigJogo.LARGURA_TELA // 2 - \
-            self.selection1.get_size()[0] // 2
-        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
-            (self.titulo.get_size()[1] * 7.5)
-        tela.blit(self.selection3, (px, py))
     
-    def desenha_selection4(self,tela):
-        px = ConfigJogo.LARGURA_TELA // 2 - \
-            self.selection1.get_size()[0] // 2
-        py = (0.29 * ConfigJogo.ALTURA_TELA // 2) + \
-            (self.titulo.get_size()[1] * 10.5)
-        tela.blit(self.selection4, (px, py))
+    def retorna_indice2(self):  #função para retornar um valor para a variável id2 em jogo.py
+        return self.indice2

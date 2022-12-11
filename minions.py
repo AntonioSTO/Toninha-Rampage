@@ -2,6 +2,7 @@ import pygame as pg
 from typing import Tuple
 from config_jogo import *
 import random
+from personagem_bat import Personagem_batalha
 
 class Minions:
 
@@ -16,7 +17,7 @@ class Minions:
         self.posicao_inicial = self.posicao
         self.colisao = False
     
-    def movimento(self, inimigo):
+    def movimento(self, inimigo: Personagem_batalha):
         x, y = self.posicao
         x_inimigo = inimigo.posicao[0] + 41
         y_inimigo = inimigo.posicao[1] + 41
@@ -43,7 +44,7 @@ class Minions:
                     and ((novo_x + 20) <= ConfigJogo.LARGURA_TELA_PRINCIPAL)): 
             self.posicao = (novo_x, novo_y)
     
-    def desenha(self, tela, jogador, inimigo):
+    def desenha(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha):
         x, y = self.posicao
         x_inimigo = inimigo.posicao[0] + 41
         y_inimigo = inimigo.posicao[1] + 41
@@ -69,7 +70,7 @@ class Minions:
             self.posicao = self.posicao_inicial
             self.colisao = True
         
-    def rodar(self,tela,jogador,inimigo):
+    def rodar(self,tela,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         self.movimento(inimigo)
         self.desenha(tela, jogador, inimigo)
 

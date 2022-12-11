@@ -55,28 +55,12 @@ class Personagem_batalha:
     def mover_para_cima(self):
         if self.stun.tempo_passado() > 2:
             self.velocidade_y = -self.velocidade
-            '''if self.posicao[0]+41 >= 160 and self.posicao[0]+41 <= 224:
-                if (self.posicao[1] - self.velocidade <= 480) and (self.posicao[1] - self.velocidade >= 416):
-                    self.parar_y()
-                
-                else: 
-                    self.velocidade_y = -self.velocidade
-                    
-            else:
-                self.velocidade_y = -self.velocidade'''
+            
 
     def mover_para_baixo(self):
         if self.stun.tempo_passado() > 2:
             self.velocidade_y = self.velocidade
-            '''if self.posicao[0]+41 >= 160 and self.posicao[0]+41 <= 224:
-                if (self.posicao[1] + 82 + self.velocidade >= 416) and (self.posicao[1] + 82 + self.velocidade <= 480):
-                    self.parar_y()
-                
-                else: 
-                    self.velocidade_y = self.velocidade
-                    
-            else:
-                self.velocidade_y = self.velocidade'''
+            
 
     def mover_para_direita(self):
         if self.stun.tempo_passado() > 2:
@@ -92,6 +76,7 @@ class Personagem_batalha:
 
     def parar_x(self):
         self.velocidade_x = 0
+
     def parar_y(self):
         self.velocidade_y = 0
 
@@ -102,16 +87,21 @@ class Personagem_batalha:
         novo_y = y + self.velocidade_y
         self.rect = pg.Rect(novo_x, novo_y, 60, 82)
 
+        #Limitação das bordas (blocos inquebráveis)
+
         if ((novo_y >= 32) and \
                 ((novo_y + 82) <= ConfigJogo.ALTURA_TELA_PRINCIPAL - 32)) and ((novo_x >= 32) \
-                    and ((novo_x + 82) <= ConfigJogo.LARGURA_TELA_PRINCIPAL - 32)): 
+                    and ((novo_x + 82) <= ConfigJogo.LARGURA_TELA_PRINCIPAL - 32)):
+
+            #Limitação da colisão com o bloco quebrável
+
             if ConfigJogo.B_BLOCK_VIDA1 > 0:
                 if not self.rect.colliderect(ConfigJogo.B_BLOCK1):
                     self.posicao = (novo_x, novo_y)
             else:
                 self.posicao = (novo_x, novo_y)
 
-    def slow(self):
+    def slow(self):         #atualização da velocidade e da sprite na água
         x, y = self.posicao
 
         if y < ConfigJogo.ALTURA_TELA_PRINCIPAL//2:
@@ -157,67 +147,3 @@ class Personagem_batalha:
         
         if self.tempo_area.tempo_passado() < 2:
             pass
-
-
-    #def desenha_area(self, tela, mouse):
-     #   x = mouse[0]
-      #  y = mouse[1]
-#
- #       pg.draw.circle(tela,
-  #      (255, 100, 80), 
-   #     (x, y),
-    #    100)
-
-        '''if self.direcao == 0:
-            if self.ataque_fisico_bool:
-                pg.draw.circle(tela,
-                        (255, 220, 220), 
-                        (self.posicao[0]+41, self.posicao[1]+41),
-                        50)
-                tela.blit(self.sprite_ataque, (x,y))
-            
-            elif self.ataque_distancia_bool:
-                tela.blit(self.sprite_ataque, (x,y))
-
-            else:
-                tela.blit(self.sprite_direita, (x,y))
-
-        if self.direcao == 1:
-            if self.ataque_fisico_bool:
-                pg.draw.circle(tela,
-                        (255, 220, 220), 
-                        (self.posicao[0]+41, self.posicao[1]+41),
-                        50)
-                tela.blit(pg.transform.flip(self.sprite_ataque, True, False), (x,y))
-
-            elif self.ataque_distancia_bool:
-                tela.blit(pg.transform.flip(self.sprite_ataque, True, False), (x,y))
-
-            else:
-                tela.blit(self.sprite_esquerda, (x,y))'''
-
-    
-    '''def ataque(self):
-        if self.nome == 'Toninha Maga' or self.nome == "Soldado Atirador":
-            self.ataque_distancia_bool = True
-        else:
-            self.ataque_fisico_bool = True'''
-
-    '''def parar_ataque(self):
-        self.ataque_fisico_bool = False
-        self.ataque_distancia_bool = False'''
-
-    '''def ataque_fisico(self, inimigo):
-        pos1 = (self.posicao[0] + 41, self.posicao[1] + 41)
-        pos2 = (inimigo.posicao[0] + 41, inimigo.posicao[1] + 41)
-        d = (((pos1[0]-pos2[0])**2)+((pos1[1]-pos2[1])**2))**(1/2)
-
-        if (self.nome != 'Toninha Maga' and self.nome != "Soldado Atirador") and d <= 50:
-            inimigo.vida = inimigo.vida - self.dano
-        
-        print(inimigo.vida)
-
-    def cura(self):
-        if (self.nome == 'Toninha Monge' or self.nome == 'Soldado Medico'):
-            self.vida += self.dano'''
-            

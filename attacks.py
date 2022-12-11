@@ -6,13 +6,14 @@ import pygame as pg
 from cronometro import Cronometro
 from config_jogo import *
 from minions import *
+from personagem_bat import Personagem_batalha
 
 class AtaqueFisico:
     def __init__(self):
         self.timer = Cronometro()
         self.encerra = 0
         
-    def ataque_normal(self, tela, jogador, inimigo):
+    def ataque_normal(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha):
         pos1 = (jogador.posicao[0] + 41, jogador.posicao[1] + 41)
         pos2 = (inimigo.posicao[0] + 41, inimigo.posicao[1] + 41)
         d = (((pos1[0]-pos2[0])**2)+((pos1[1]-pos2[1])**2))**(1/2)
@@ -25,27 +26,10 @@ class AtaqueFisico:
             elif inimigo.direcao == 1:
                 inimigo.sprite_atual = pg.transform.flip(inimigo.sprite_dano, True, False)
                 
-        '''if 416 < pos1[1] < 448:
-            if 160 < pos1[0]+50 < 224:
-                ConfigJogo.B_BLOCK_VIDA1 -= 1
-            
-            if 160 < pos1[0]-50 < 224:
-                ConfigJogo.B_BLOCK_VIDA1 -= 1 
-            
-                
-        if 160 < pos1[0] < 224:
-            if 416 < pos1[1]+50 < 448:
-                ConfigJogo.B_BLOCK_VIDA1 -= 1
-            
-            if 416 < pos1[1]-50 < 448:
-                ConfigJogo.B_BLOCK_VIDA1 -= 1'''
                 
         if jogador.rect.colliderect(ConfigJogo.B_BLOCK1):
             ConfigJogo.B_BLOCK_VIDA1 -= jogador.dano
                 
-        
-        
-        # print(inimigo.vida)
     
         x = jogador.posicao[0]
         y = jogador.posicao[1]
@@ -66,7 +50,7 @@ class AtaqueFisico:
         pg.display.flip()
         
 
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         if jogador.direcao == 0 and jogador.sprite_atual == jogador.sprite_ataque:
             jogador.sprite_atual = jogador.sprite_direita
     
@@ -79,7 +63,7 @@ class AtaqueFisico:
         if inimigo.direcao == 1:
             inimigo.sprite_atual = inimigo.sprite_esquerda
 
-    def tempo(self, jogador):
+    def tempo(self, jogador: Personagem_batalha):
         if self.timer.tempo_passado() > 0.5:
             self.encerra = 1
             self.timer.reset()
@@ -90,7 +74,7 @@ class Cura:
         self.encerra = 0
         self.vida = 0
         
-    def ataque_especial(self, tela, jogador, inimigo, mouse):
+    def ataque_especial(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha, mouse):
         
         x = jogador.posicao[0]
         y = jogador.posicao[1]
@@ -107,14 +91,14 @@ class Cura:
         
         jogador.sprite_atual = jogador.sprite_especial
 
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         if jogador.direcao == 0 and jogador.sprite_atual == jogador.sprite_especial:
             jogador.sprite_atual = jogador.sprite_direita
     
         elif jogador.direcao == 1 and jogador.sprite_atual == jogador.sprite_especial:
             jogador.sprite_atual = jogador.sprite_esquerda
 
-    def tempo(self, jogador):
+    def tempo(self, jogador: Personagem_batalha):
         if self.timer.tempo_passado() > 3:
             self.encerra = 1
             self.timer.reset()
@@ -126,7 +110,7 @@ class Stun:
         self.intervalo = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo, mouse):
+    def ataque_especial(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha, mouse):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
         d = (((pos1[0]-pos2[0])**2)+((pos1[1]-pos2[1])**2))**(1/2)
@@ -194,7 +178,7 @@ class Stun:
                 jogador.sprite_atual = pg.transform.flip(jogador.sprite_ataque, True, False)
         
 
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         if jogador.direcao == 0 and jogador.sprite_atual == jogador.sprite_ataque:
             jogador.sprite_atual = jogador.sprite_direita
     
@@ -202,7 +186,7 @@ class Stun:
             jogador.sprite_atual = jogador.sprite_esquerda
         
 
-    def tempo(self, jogador):
+    def tempo(self, jogador: Personagem_batalha):
         if self.timer.tempo_passado() > 4:
             self.encerra = 1
             self.timer.reset()
@@ -215,7 +199,7 @@ class AtaqueArea:
         self.timer = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo, mouse):
+    def ataque_especial(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha, mouse: Tuple[float, float]):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
 
@@ -255,7 +239,7 @@ class AtaqueArea:
         if inimigo.direcao == 0:
             tela.blit(inimigo.sprite_atual, (z,w))
 
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         if jogador.direcao == 0:
             jogador.sprite_atual = jogador.sprite_direita
         
@@ -282,7 +266,7 @@ class Invoca:
         self.timer = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo, mouse):
+    def ataque_especial(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha, mouse):
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
 
@@ -296,7 +280,7 @@ class Invoca:
             minion5.rodar(tela,jogador, inimigo)
             minion6.rodar(tela,jogador, inimigo)
 
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         minion1.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
         minion2.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
         minion3.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
@@ -321,7 +305,7 @@ class Invoca:
             minion6.colisao = False
             
 
-    def tempo(self, jogador):
+    def tempo(self, jogador: Personagem_batalha):
         if jogador.direcao_inicial == 0:
             if self.timer.tempo_passado() > 8 or (minion1.colisao == True and minion2.colisao == True and minion3.colisao == True):
                 self.encerra = 1
@@ -344,13 +328,13 @@ class Invoca:
 class Projectile:
 
     def __init__(self, velocidade: float,
-    posicao: Tuple[float, float], cor):
+    posicao: Tuple[float, float], cor: Tuple[int, int, int]):
         self.velocidade = velocidade
         self.posicao = posicao
         self.posicao_inicial = posicao
         self.cor = cor
     
-    def movimento(self, jogador):
+    def movimento(self, jogador: Personagem_batalha):
         x, y = self.posicao
     
         vx = self.velocidade
@@ -358,12 +342,10 @@ class Projectile:
         novo_x = x
         novo_x += vx
 
-
-        
         self.posicao = (novo_x, y)
 
     
-    def desenha(self, tela, jogador, inimigo):
+    def desenha(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha):
         x, y = self.posicao
         x_inimigo = inimigo.posicao[0] + 41
         y_inimigo = inimigo.posicao[1] + 41
@@ -398,7 +380,7 @@ class Projectile:
                     self.posicao = self.posicao_inicial
             
         
-    def rodar(self,tela,jogador,inimigo):
+    def rodar(self,tela,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         self.movimento(jogador)
         self.desenha(tela, jogador, inimigo)
 
@@ -412,7 +394,7 @@ class AtaqueDistancia:
         self.encerra = 0
         self.projeteis = []
 
-    def ataque_normal(self, tela, jogador, inimigo):
+    def ataque_normal(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha):
         x = jogador.posicao[0] + 41
         y = jogador.posicao[1] + 41
         direcao = jogador.direcao
@@ -454,7 +436,7 @@ class AtaqueDistancia:
 
 
     
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         self.projeteis = []
 
         if inimigo.direcao == 0:
@@ -463,7 +445,7 @@ class AtaqueDistancia:
         if inimigo.direcao == 1:
             inimigo.sprite_atual = inimigo.sprite_esquerda
             
-    def tempo(self, jogador):
+    def tempo(self, jogador: Personagem_batalha):
         if self.timer.tempo_passado() > 0.6:
             self.encerra = 1
             self.timer.reset()
@@ -476,7 +458,7 @@ class Teleport:
         self.timer = Cronometro()
         self.encerra = 0
 
-    def ataque_especial(self, tela, jogador, inimigo, mouse):
+    def ataque_especial(self, tela, jogador: Personagem_batalha, inimigo: Personagem_batalha, mouse: Tuple[float, float]):
 
         position = mouse
 
@@ -484,10 +466,10 @@ class Teleport:
 
             jogador.posicao = (position[0] - 41, position[1] - 41)
 
-    def reseta(self,jogador,inimigo):
+    def reseta(self,jogador: Personagem_batalha,inimigo: Personagem_batalha):
         pass
     
-    def tempo(self, jogador):
+    def tempo(self, jogador: Personagem_batalha):
         if self.timer.tempo_passado() > 2.1:
             self.encerra = 1
             self.timer.reset()

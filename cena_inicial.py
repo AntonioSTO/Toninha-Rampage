@@ -2,14 +2,15 @@ import sys
 import pygame as pg
 from persona import scale
 from persona import img
-
 from config_jogo import ConfigJogo
 
 class CenaInicial:
     def __init__(self, tela):
         self.tela = tela
-        self.encerra = False
+        self.encerra: bool = False
         
+        #criação das caixas de texto
+
         font_titulo = pg.font.SysFont(None, ConfigJogo.FONTE_TITULO)
         font_subtitulo = pg.font.SysFont(None, ConfigJogo.FONTE_SUBTITULO)
         self.titulo = font_titulo.render(
@@ -23,6 +24,8 @@ class CenaInicial:
     
     def tratamento_eventos(self):
 
+        #Eventos de saida do jogo e avanço nas cenas
+
         for event in pg.event.get():
             if (event.type == pg.QUIT) or \
                 (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
@@ -31,20 +34,6 @@ class CenaInicial:
             if (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
                 ConfigJogo.TELA += 1
                 self.encerra = True
-    
-    def rodar(self):
-        while not self.encerra:
-            self.tratamento_eventos()
-            self.desenha()
-            
-
-    def desenha(self):
-        self.fundo = scale(img(r'./sprites/fundo_inicial.png'), (ConfigJogo.LARGURA_TELA,ConfigJogo.ALTURA_TELA ))
-        self.tela.blit(self.fundo,(0,0))
-        self.desenha_titulo(self.tela)
-        self.desenha_subtitulo(self.tela)
-        self.desenha_integrantes(self.tela)
-        pg.display.flip()
 
     def desenha_titulo(self, tela):
         px = ConfigJogo.LARGURA_TELA // 2 - self.titulo.get_size()[0] // 2
@@ -63,3 +52,15 @@ class CenaInicial:
             (self.titulo.get_size()[1] * 5.5)
         tela.blit(self.subtitulo, (px, py))
         
+    def desenha(self):
+        self.fundo = scale(img(r'./sprites/fundo_inicial.png'), (ConfigJogo.LARGURA_TELA,ConfigJogo.ALTURA_TELA ))
+        self.tela.blit(self.fundo,(0,0))
+        self.desenha_titulo(self.tela)
+        self.desenha_subtitulo(self.tela)
+        self.desenha_integrantes(self.tela)
+        pg.display.flip()
+
+    def rodar(self):
+        while not self.encerra:
+            self.tratamento_eventos()
+            self.desenha()
