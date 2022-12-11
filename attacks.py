@@ -24,6 +24,26 @@ class AtaqueFisico:
         
             elif inimigo.direcao == 1:
                 inimigo.sprite_atual = pg.transform.flip(inimigo.sprite_dano, True, False)
+                
+        '''if 416 < pos1[1] < 448:
+            if 160 < pos1[0]+50 < 224:
+                ConfigJogo.B_BLOCK_VIDA1 -= 1
+            
+            if 160 < pos1[0]-50 < 224:
+                ConfigJogo.B_BLOCK_VIDA1 -= 1 
+            
+                
+        if 160 < pos1[0] < 224:
+            if 416 < pos1[1]+50 < 448:
+                ConfigJogo.B_BLOCK_VIDA1 -= 1
+            
+            if 416 < pos1[1]-50 < 448:
+                ConfigJogo.B_BLOCK_VIDA1 -= 1'''
+                
+        if jogador.rect.colliderect(ConfigJogo.B_BLOCK1):
+            ConfigJogo.B_BLOCK_VIDA1 -= jogador.dano
+                
+        
         
         # print(inimigo.vida)
     
@@ -59,7 +79,7 @@ class AtaqueFisico:
         if inimigo.direcao == 1:
             inimigo.sprite_atual = inimigo.sprite_esquerda
 
-    def tempo(self):
+    def tempo(self, jogador):
         if self.timer.tempo_passado() > 0.5:
             self.encerra = 1
             self.timer.reset()
@@ -94,7 +114,7 @@ class Cura:
         elif jogador.direcao == 1 and jogador.sprite_atual == jogador.sprite_especial:
             jogador.sprite_atual = jogador.sprite_esquerda
 
-    def tempo(self):
+    def tempo(self, jogador):
         if self.timer.tempo_passado() > 3:
             self.encerra = 1
             self.timer.reset()
@@ -173,12 +193,6 @@ class Stun:
             if jogador.direcao == 1:
                 jogador.sprite_atual = pg.transform.flip(jogador.sprite_ataque, True, False)
         
-        '''if inimigo.direcao == 0:
-            pass
-        
-        if inimigo.direcao == 1:
-            pass'''
-    
 
     def reseta(self,jogador,inimigo):
         if jogador.direcao == 0 and jogador.sprite_atual == jogador.sprite_ataque:
@@ -188,7 +202,7 @@ class Stun:
             jogador.sprite_atual = jogador.sprite_esquerda
         
 
-    def tempo(self):
+    def tempo(self, jogador):
         if self.timer.tempo_passado() > 4:
             self.encerra = 1
             self.timer.reset()
@@ -254,7 +268,7 @@ class AtaqueArea:
         if inimigo.direcao == 0:
             inimigo.sprite_atual = pg.transform.flip(inimigo.sprite_esquerda, True, False)  
               
-    def tempo(self):
+    def tempo(self, jogador):
         if self.timer.tempo_passado() > 4:
             self.encerra = 1
             self.timer.reset()
@@ -272,65 +286,60 @@ class Invoca:
         pos1 = [jogador.posicao[0] + 41, jogador.posicao[1] + 41]
         pos2 = [inimigo.posicao[0] + 41, inimigo.posicao[1] + 41]
 
-        minion1.rodar(tela,jogador, inimigo)
-        minion2.rodar(tela,jogador, inimigo)
-        minion3.rodar(tela,jogador, inimigo)
+        if jogador.direcao_inicial == 0:
+            minion1.rodar(tela,jogador, inimigo)
+            minion2.rodar(tela,jogador, inimigo)
+            minion3.rodar(tela,jogador, inimigo)
+            
+        else:
+            minion4.rodar(tela,jogador, inimigo)
+            minion5.rodar(tela,jogador, inimigo)
+            minion6.rodar(tela,jogador, inimigo)
 
     def reseta(self,jogador,inimigo):
         minion1.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
         minion2.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
         minion3.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
+        minion4.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
+        minion5.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
+        minion6.posicao = (pos1[0] + random.randint(0,100), pos1[1] + random.randint(0,100))
+        
         if inimigo.direcao == 0:
             inimigo.sprite_atual = inimigo.sprite_direita
         
         if inimigo.direcao == 1:
             inimigo.sprite_atual = inimigo.sprite_esquerda
             
-        minion1.colisao = False
-        minion2.colisao = False
-        minion3.colisao = False
-
-    def tempo(self):
-        if self.timer.tempo_passado() > 8 or (minion1.colisao == True and minion2.colisao == True and minion3.colisao == True):
-            self.encerra = 1
+        if jogador.direcao_inicial == 0:
             minion1.colisao = False
             minion2.colisao = False
             minion3.colisao = False
-            self.timer.reset()
+            
+        else:
+            minion4.colisao = False
+            minion5.colisao = False
+            minion6.colisao = False
+            
+
+    def tempo(self, jogador):
+        if jogador.direcao_inicial == 0:
+            if self.timer.tempo_passado() > 8 or (minion1.colisao == True and minion2.colisao == True and minion3.colisao == True):
+                self.encerra = 1
+                minion1.colisao = False
+                minion2.colisao = False
+                minion3.colisao = False
+                self.timer.reset()
+        
+        if jogador.direcao_inicial == 1:
+            if self.timer.tempo_passado() > 8 or (minion4.colisao == True and minion5.colisao == True and minion6.colisao == True):
+                self.encerra = 1
+                minion4.colisao = False
+                minion5.colisao = False
+                minion6.colisao = False
+                self.timer.reset()
+        
 
 
-
-'''class Projectile:
-    def __init__(self, p0_x, p0_y):
-        self.px = p0_x
-        self.py = p0_y
-        self.v_x = 1
-        self.raio = 10
-        self.color = (0,0,0)
-
-    def draw(self, screen):
-        pg.draw.circle(screen, self.color, (self.px, self.py), self.raio)
-
-    def update(self):
-        self.px += self.v_x
-        if self.px < 0:
-            self.px = 0
-
-        limit_x = (ConfigJogo.LARGURA_TELA_PRINCIPAL - self.r)
-        if self.px > limit_x:
-            self.px = limit_x
-
-    def perform_shot(jogador, projectiles):
-        (x, y) = jogador.posicao
-        direcao = jogador.direcao
-        new_projectile = Projectile(
-            x, y, (0,0,0), 10)
-        projectiles.append(new_projectile)
-
-    def rodar(self, tela, jogador, projectiles):
-        self.perform_shot(jogador, projectiles)
-        self.draw(tela)
-        self.update()'''
 
 class Projectile:
 
@@ -372,7 +381,7 @@ class Projectile:
                     (self.posicao[0], self.posicao[1]),
                     10)
 
-        elif (d <= 40):
+        if (d <= 40):
             inimigo.vida -= 6*jogador.dano
             if inimigo.direcao == 0:
                 inimigo.sprite_atual = inimigo.sprite_dano
@@ -381,6 +390,13 @@ class Projectile:
                 inimigo.sprite_atual = pg.transform.flip(inimigo.sprite_dano, True, False)
             
             self.posicao = self.posicao_inicial
+        
+        if ConfigJogo.B_BLOCK_VIDA1 > 0:
+            if 416 <= self.posicao[1] <= 480:
+                if 160 <= self.posicao[0] <= 224:
+                    ConfigJogo.B_BLOCK_VIDA1 -= jogador.dano
+                    self.posicao = self.posicao_inicial
+            
         
     def rodar(self,tela,jogador,inimigo):
         self.movimento(jogador)
@@ -440,8 +456,6 @@ class AtaqueDistancia:
     
     def reseta(self,jogador,inimigo):
         self.projeteis = []
-        '''for p in AtaqueDistancia.projeteis:
-            p.posicao = p.posicao'''
 
         if inimigo.direcao == 0:
             inimigo.sprite_atual = inimigo.sprite_direita
@@ -449,7 +463,7 @@ class AtaqueDistancia:
         if inimigo.direcao == 1:
             inimigo.sprite_atual = inimigo.sprite_esquerda
             
-    def tempo(self):
+    def tempo(self, jogador):
         if self.timer.tempo_passado() > 0.6:
             self.encerra = 1
             self.timer.reset()
@@ -473,7 +487,7 @@ class Teleport:
     def reseta(self,jogador,inimigo):
         pass
     
-    def tempo(self):
+    def tempo(self, jogador):
         if self.timer.tempo_passado() > 2.1:
             self.encerra = 1
             self.timer.reset()

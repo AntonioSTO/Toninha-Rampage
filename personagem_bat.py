@@ -10,7 +10,7 @@ class Personagem_batalha:
 
     def __init__(self, nome: str, vida: float, dano: float,
     velocidade: float, posicao: Tuple[float, float], direcao: int, sprite_direita: any, sprite_esquerda: any, sprite_ataque: any,
-    sprite_especial: any, sprite_dano: any, sprite_agua: any, classe1, classe2):
+    sprite_especial: any, sprite_dano: any, sprite_agua: any, sprite_death: any, classe1, classe2):
         self.nome = nome
         self.vida = vida
         self.dano = dano
@@ -28,6 +28,7 @@ class Personagem_batalha:
         self.sprite_especial = sprite_especial
         self.sprite_dano = sprite_dano
         self.sprite_agua = sprite_agua
+        self.sprite_death = sprite_death
         self.posicao_centro = (posicao[0] + 41, posicao[1] + 41)
         self.direcao = direcao
         self.direcao_inicial = direcao
@@ -35,6 +36,8 @@ class Personagem_batalha:
         self.ataque_distancia_bool = False
         self.classe1 = classe1
         self.classe2 = classe2
+        
+        self.rect = pg.Rect(self.posicao[0], self.posicao[1], 60, 82)
 
         self.tempo1 = Cronometro()
         self.tempo2 = Cronometro()
@@ -52,10 +55,28 @@ class Personagem_batalha:
     def mover_para_cima(self):
         if self.stun.tempo_passado() > 2:
             self.velocidade_y = -self.velocidade
+            '''if self.posicao[0]+41 >= 160 and self.posicao[0]+41 <= 224:
+                if (self.posicao[1] - self.velocidade <= 480) and (self.posicao[1] - self.velocidade >= 416):
+                    self.parar_y()
+                
+                else: 
+                    self.velocidade_y = -self.velocidade
+                    
+            else:
+                self.velocidade_y = -self.velocidade'''
 
     def mover_para_baixo(self):
         if self.stun.tempo_passado() > 2:
             self.velocidade_y = self.velocidade
+            '''if self.posicao[0]+41 >= 160 and self.posicao[0]+41 <= 224:
+                if (self.posicao[1] + 82 + self.velocidade >= 416) and (self.posicao[1] + 82 + self.velocidade <= 480):
+                    self.parar_y()
+                
+                else: 
+                    self.velocidade_y = self.velocidade
+                    
+            else:
+                self.velocidade_y = self.velocidade'''
 
     def mover_para_direita(self):
         if self.stun.tempo_passado() > 2:
@@ -79,11 +100,16 @@ class Personagem_batalha:
         self.slow()
         novo_x = x + self.velocidade_x
         novo_y = y + self.velocidade_y
+        self.rect = pg.Rect(novo_x, novo_y, 60, 82)
 
-        if ((novo_y >= 0) and \
-                ((novo_y + 82) <= ConfigJogo.ALTURA_TELA_PRINCIPAL)) and ((novo_x >= 0) \
-                    and ((novo_x + 82) <= ConfigJogo.LARGURA_TELA_PRINCIPAL)): 
-            self.posicao = (novo_x, novo_y)
+        if ((novo_y >= 32) and \
+                ((novo_y + 82) <= ConfigJogo.ALTURA_TELA_PRINCIPAL - 32)) and ((novo_x >= 32) \
+                    and ((novo_x + 82) <= ConfigJogo.LARGURA_TELA_PRINCIPAL - 32)): 
+            if ConfigJogo.B_BLOCK_VIDA1 > 0:
+                if not self.rect.colliderect(ConfigJogo.B_BLOCK1):
+                    self.posicao = (novo_x, novo_y)
+            else:
+                self.posicao = (novo_x, novo_y)
 
     def slow(self):
         x, y = self.posicao
@@ -121,6 +147,8 @@ class Personagem_batalha:
     def desenha(self, tela):
         x = self.posicao[0]
         y = self.posicao[1]
+        
+        # pg.draw.rect(tela, (0,0,0), self.rect, 3)
 
         tela.blit(self.sprite_atual, (x,y))
 

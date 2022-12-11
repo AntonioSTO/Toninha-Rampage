@@ -29,6 +29,13 @@ class ConfigJogo:
     VITORIOSO = 0
     SPRITE_VITORIOSO1 = None
     SPRITE_VITORIOSO1 = None
+    
+    B_BLOCK_COR1 = (0,0,0)
+    B_BLOCK_COR2 = (51,25,0)
+    B_BLOCK_COR3 = (102,0,0)
+    
+    B_BLOCK1 = pg.Rect(160, 416, 64, 64)
+    B_BLOCK_VIDA1 = 150
 
     font_stun = pg.font.SysFont(None, FONTE_HISTORIA)
     stunned = font_stun.render(
@@ -51,7 +58,8 @@ def img(diretorio):
 def scale(imagem, resolucao):
     return pg.transform.scale(imagem, resolucao)
 
-minion = scale(img(r'./sprites/minion.png'), (32, 32))
+minionT = scale(img(r'./sprites/minion.png'), (32, 32))
+minionBR = scale(img(r'./sprites/minion2.png'), (20, 20))
     
 
 
