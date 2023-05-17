@@ -1,6 +1,6 @@
 # TONINHA-RAMPAGE
 
-Jogo criado por: - Antônio Sant'Ana de Oliviera
+Jogo criado por: - Antônio Sant'Ana de Oliveira
                  - Arthur Bandeira Salvador
 
 Disciplina: Programação Orientada a Objetos
